@@ -38,8 +38,8 @@ library(tidyverse)
 library(gt)
 
 # Read the CSV files into tibbles
-epl_results <- read_csv("epl/epl_results.csv")
-epl_teams <- read_csv("epl/epl_teams.csv")
+epl_results <- read_csv("data/epl/epl_results.csv")
+epl_teams <- read_csv("data/epl/epl_teams.csv")
 
 # Print the datasets to verify
 print(epl_results)
