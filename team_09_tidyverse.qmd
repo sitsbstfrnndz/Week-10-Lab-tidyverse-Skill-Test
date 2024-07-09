@@ -42,7 +42,7 @@ print(epl_teams)
 
 ```
 
-# Task 1: Converting EPL Football Results into a League Table
+## 1.1 Generate a League Table from the EPL Results
 
 ```{r include=TRUE}
 # Convert match results to points, goal difference, and goals scored
@@ -77,6 +77,7 @@ home_stats <- results_long %>%
   left_join(epl_teams, by = c("home_team" = "abbr")) %>%
   rename(team = name)
 
+# Compute statistics for away teams
 away_stats <- results_long %>%
   group_by(away_team) %>%
   summarize(
@@ -88,7 +89,7 @@ away_stats <- results_long %>%
   left_join(epl_teams, by = c("away_team" = "abbr")) %>%
   rename(team = name)
 
-# Combine home and away stats
+# Combine home and away statistics and compute the final league table
 league_table <- home_stats %>%
   select(team, points, goal_diff, goals_for, goals_against) %>%
   bind_rows(away_stats %>% select(team, points, goal_diff, goals_for, goals_against)) %>%
@@ -107,14 +108,54 @@ print(league_table)
 
 ```
 
-### Task 2: Finding and Visualizing a Real-World Dataset
+## 1.2 Improve Visualization Using `gt` Functions
 
 ```{r}
-# Improve the visualization of the league table
-
-
+# Improve the visualization of the league table using gt
+league_table %>%
+  gt() %>%
+  tab_header(
+    title = md("English Premier League 2019-2020 Season League Table")
+  ) %>%
+  data_color(
+    columns = c(points, goal_diff, goals_for),
+    fn = scales::col_numeric(
+      palette = c("red", "yellow", "green"),
+      domain = NULL
+    )
+  ) %>%
+  cols_label(
+    rank = "Rank",
+    team = "Team",
+    points = "Points",
+    goal_diff = "Goal Difference",
+    goals_for = "Goals For"
+  ) %>%
+  tab_options(
+    table.font.names = "Arial",
+    table.font.size = 12,
+    table.background.color = "white",
+    heading.title.font.size = 16,
+    heading.title.font.weight = "bold"
+  )
 ```
 
+In the improved visualization, we:
+
+- **Added a Title**:
+  - The title "English Premier League 2019-2020 Season League Table" clearly indicates the table's content.
+
+- **Colored Columns**:
+  - **Points Column**: Applied a gradient from red (low points) to green (high points) to highlight team performance.
+  - **Goal Difference (goal_diff) Column**: Used a gradient from red (negative goal difference) to green (positive goal difference) to indicate defensive performance.
+  - **Goals For (goals_for) Column**: Implemented a gradient from red (low goals) to green (high goals) to indicate offensive performance.
+
+- **Styled the Table**:
+  - Utilized the Arial font for improved readability.
+  - Adjusted font sizes to enhance clarity and visual appeal.
+  
+# Task 2: Finding and Visualizing a Real-World Dataset
+  
 ## 2.1 Use R Code to Validate Conditions C, D, and E for Your Data
 
 **Loading the Dataset**
