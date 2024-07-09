@@ -10,15 +10,100 @@ editor: visual
 
 # Task 1: Converting EPL Football Results into a League Table
 
-## 1.1 Generate a League Table from the EPL Results
+```{r setup, include=TRUE}
+# Set CRAN mirror non-interactively
+options(repos = c(CRAN = "https://cran.rstudio.com/"))
 
-...
+# Install and load the tidyverse package
+if (!requireNamespace("tidyverse", quietly = TRUE)) {
+  install.packages("tidyverse")
+}
 
-## 1.2 Improve Visualization Using `gt` Functions
+library(tidyverse)
+library(gt)
 
-...
+# Read the CSV files into tibbles
+epl_results <- read_csv("epl/epl_results.csv")
+epl_teams <- read_csv("epl/epl_teams.csv")
+
+# Print the datasets to verify
+print(epl_results)
+print(epl_teams)
+
+```
+
+# Task 1: Converting EPL Football Results into a League Table
+
+```{r include=TRUE}
+# Convert match results to points, goal difference, and goals scored
+results_long <- epl_results %>%
+  pivot_longer(cols = -home_team, names_to = "away_team", values_to = "result") %>%
+  filter(result != "-") %>%
+  separate(result, into = c("home_goals", "away_goals"), sep = "-", convert = TRUE) %>%
+  mutate(
+    home_points = case_when(
+      home_goals > away_goals ~ 3,
+      home_goals < away_goals ~ 0,
+      TRUE ~ 1
+    ),
+    away_points = case_when(
+      home_goals > away_goals ~ 0,
+      home_goals < away_goals ~ 3,
+      TRUE ~ 1
+    ),
+    home_goal_diff = home_goals - away_goals,
+    away_goal_diff = away_goals - home_goals
+  )
+
+# Compute statistics for home and away teams
+home_stats <- results_long %>%
+  group_by(home_team) %>%
+  summarize(
+    points = sum(home_points),
+    goal_diff = sum(home_goal_diff),
+    goals_for = sum(home_goals),
+    goals_against = sum(away_goals)
+  ) %>%
+  left_join(epl_teams, by = c("home_team" = "abbr")) %>%
+  rename(team = name)
+
+away_stats <- results_long %>%
+  group_by(away_team) %>%
+  summarize(
+    points = sum(away_points),
+    goal_diff = sum(away_goal_diff),
+    goals_for = sum(away_goals),
+    goals_against = sum(home_goals)
+  ) %>%
+  left_join(epl_teams, by = c("away_team" = "abbr")) %>%
+  rename(team = name)
+
+# Combine home and away stats
+league_table <- home_stats %>%
+  select(team, points, goal_diff, goals_for, goals_against) %>%
+  bind_rows(away_stats %>% select(team, points, goal_diff, goals_for, goals_against)) %>%
+  group_by(team) %>%
+  summarize(
+    points = sum(points),
+    goal_diff = sum(goal_diff),
+    goals_for = sum(goals_for)
+  ) %>%
+  arrange(desc(points), desc(goal_diff), desc(goals_for)) %>%
+  mutate(rank = row_number()) %>%
+  select(rank, team, points, goal_diff, goals_for)
+
+# Print the league table
+print(league_table)
+
+```
 
 # Task 2: Finding and Visualizing a Real-World Dataset
+
+```{r}
+# Improve the visualization of the league table
+
+
+```
 
 ## 2.1 Use R Code to Validate Conditions C, D, and E for Your Data
 
