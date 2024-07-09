@@ -1,0 +1,63 @@
+---
+title: "team_01_tidyverse"
+format: html
+html:
+  toc: true
+  toc_depth: true
+  embed-resources: true
+editor: visual
+---
+
+# Task 1: Converting EPL Football Results into a League Table
+
+## 1.1 Generate a League Table from the EPL Results
+
+...
+
+## 1.2 Improve Visualization Using `gt` Functions
+
+...
+
+# Task 2: Finding and Visualizing a Real-World Dataset
+
+## 2.1 Use R Code to Validate Conditions C, D, and E for Your Data
+
+...
+
+## 2.2 Plot 1 – Generate a Scatter Plot Using geom_point()
+
+...
+
+## 2.3 Plot 2 – Create an Improved Plot to Mitigate Overplotting
+
+...
+
+##2.4 Plot 3 – Add a Trend Curve in Plot 2 and Discuss Insights
+
+...
+
+# Task 3: Visualizing Michelson’s Speed-of-Light Measurements
+
+## 3.1 Convert Expt Column to Factor
+
+...
+
+## 3.2 Plot 1 – Create a Scatter Plot displaying Experiment Number vs. Measured Speeds
+
+...
+
+## 3.3 Plot 2 – Create a Box Plot Measured Speeds with One Box Experiment
+
+...
+
+## 3.4 Plot 3 – Add a Violin Plot in Plot 2
+
+...
+
+## 3.5 Plot 4 – Create a Faceted Plot Containing 5 Histograms
+
+...
+
+## 3.6 Discuss Your Choice Among the 4 Visualization Plots
+
+...
