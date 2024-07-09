@@ -167,131 +167,145 @@ student_data <- read.csv("data/student-mat.csv", header = TRUE, sep = ";")
 
 This data ([Source](https://archive.ics.uci.edu/ml/datasets/Student+Performance)) approaches student achievement in secondary education (math) of two Portuguese schools. The data attributes include student grades, demographic, social, and school-related features, and it was collected by using school reports and questionnaires.
 
-**Validating Condition C: Number of Observations**
+### Condition C: Validating Condition: More than 200 Observations
 
 ```{r}
-# Validate condition C: Number of observations
-num_observations <- student_data |>
-  nrow()
+# Validate condition: More than 200 observations
+num_observations <- nrow(student_data)
 cat("Number of observations:", num_observations, "\n")
 ```
 
-We check the number of observations in the dataset. The output will display the total number of rows (observations). The dataset should contain between 20 and 200 observations.
-
-**Validating Condition D: At Least Two Quantitative Variables**
+### Condition D: Validating Condition: Continuous Numerical Data
 
 ```{r}
-# Validate condition D: At least two quantitative variables
+# Validate condition: Continuous numerical data
 quant_vars <- student_data |>
   select(where(is.numeric)) |>
   names()
 cat("Quantitative variables:", paste(quant_vars, collapse = ", "), "\n")
 ```
 
-We identify and list all quantitative variables in the dataset. This ensures that we have at least two quantitative variables to use in our scatter plot.
-
-**Validating Condition E: Identical or Nearly Identical Values**
+### Condition E: Validating Condition: At Least Two Groups with Roughly Balanced Observations
 
 ```{r}
-# Validate condition E: Identical or nearly identical values
-duplicated_points <- student_data |>
-  group_by(G1, G3) |>
-  filter(n() > 1) |>
+# Validate condition: At least two groups with roughly balanced observations
+group_counts <- student_data |>
+  group_by(school) |>
+  summarise(count = n()) |>
+  arrange(desc(count))
+
+gt_preview(group_counts)
+```
+
+### Drop the extra rows to make the dataset less than 200 and also more balanced
+
+```{r}
+library(dplyr)
+
+# Define the desired number of observations per group to make the total < 200
+target_per_group <- 46
+
+# Sample the data to achieve the target size for each group
+balanced_data <- student_data |>
+  group_by(school) |>
+  sample_n(target_per_group, replace = FALSE) |>
   ungroup()
 
-if (nrow(duplicated_points) > 0) {
-  cat("Condition E validated: There are duplicated points.\n")
-} else {
-  cat("Condition E not validated: No duplicated points found.\n")
-}
+# Validate the new group counts
+new_group_counts <- balanced_data |>
+  group_by(school) |>
+  summarise(count = n()) |>
+  arrange(desc(count))
 
-# Display some duplicated points
-gt_preview(duplicated_points)
+gt_preview(new_group_counts)
+
+# Validate the new number of observations
+new_num_observations <- nrow(balanced_data)
+cat("New number of observations:", new_num_observations, "\n")
 ```
+## 2.2 Plot 1 – Generate a Histogram for One of the Quantitative Variables
 
-We check for duplicated points in the dataset, ensuring that there are pairs of data points with identical or nearly identical values. This is important for demonstrating strategies to mitigate overplotting. We also display a few rows of the duplicated points to visually confirm their presence.
-
-
-
-#### 2.2 Plot 1 – Generate a Scatter Plot Using geom_point()
-
-**Creating a Basic Scatter Plot**
+**Creating a Basic Histogram**
 
 ```{r}
-# Plot 1: Basic scatter plot
-scatter_plot <- student_data |>
-  ggplot(aes(x = G1, y = G3)) +
-  geom_point(color = "darkred", alpha = 0.7) +
+# Plot 1: Basic histogram
+histogram_G1 <- balanced_data |>
+  ggplot(aes(x = G1)) +
+  geom_histogram(binwidth = 1, fill = "darkred", color = "black", alpha = 0.7) +
   labs(
-    title = "Scatter Plot of First vs Final Period Grades",
+    title = "Histogram of First Period Grades (G1)",
     x = "First Period Grade (G1)",
-    y = "Final Period Grade (G3)",
-    caption = ("Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance")) +
+    y = "Frequency",
+    caption = "Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
     plot.caption = element_text(hjust = 0)
   )
 
-print(scatter_plot)
+print(histogram_G1)
 ```
 
-We create a basic scatter plot to visualize the relationship between the first period grades (G1) and the final period grades (G3). The points are colored dark red and are slightly transparent to help with visibility.
+We create a basic histogram to visualize the distribution of the first period grades (G1). The bins are colored dark red with black borders and are slightly transparent to help with visibility.
 
-#### 2.3 Plot 2 – Create an Improved Plot to Mitigate Overplotting
+## 2.3 Plot 2 – Generate a Histogram for Another Quantitative Variable
 
-**Creating a Scatter Plot with Jitter**
+**Creating a Basic Histogram for the Final Grades**
 
 ```{r}
-# Plot 2: Scatter plot with jitter to reduce overplotting
-scatter_plot_jitter <- student_data |>
-  ggplot(aes(x = G1, y = G3)) +
-  geom_jitter(width = 0.2, height = 0.2, color = "darkblue", alpha = 0.7) +
+# Plot 2: Basic histogram for final grades
+histogram_G3 <- balanced_data |>
+  ggplot(aes(x = G3)) +
+  geom_histogram(binwidth = 1, fill = "darkblue", color = "black", alpha = 0.7) +
   labs(
-    title = "Scatter Plot with Jitter of First vs Final Period Grades",
-    x = "First Period Grade (G1)",
-    y = "Final Period Grade (G3)",
-    caption = ("Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance")) +
+    title = "Histogram of Final Period Grades (G3)",
+    x = "Final Period Grade (G3)",
+    y = "Frequency",
+    caption = "Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
     plot.caption = element_text(hjust = 0)
   )
 
-print(scatter_plot_jitter)
+print(histogram_G3)
 ```
 
-We create an improved scatter plot using `geom_jitter()` to add slight random noise to the data points. This helps to reduce overplotting by spreading out points that have identical or nearly identical values. The points are colored dark blue and are semi-transparent.
+We create a basic histogram to visualize the distribution of the final period grades (G3). The bins are colored dark blue with black borders and are slightly transparent to help with visibility.
 
-#### 2.4 Plot 3 – Add a Trend Curve in Plot 2 and Discuss Insights
+## 2.4 Plot 3 – Overlay Histograms of Both Quantitative Variables
 
-**Adding a Trend Curve to the Scatter Plot with Jitter**
+**Creating an Overlay Histogram**
 
 ```{r}
-# Plot 3: Scatter plot with jitter and trend curve
-scatter_plot_trend <- student_data |>
-  ggplot(aes(x = G1, y = G3)) +
-  geom_jitter(width = 0.2, height = 0.2, color = "darkblue", alpha = 0.7) +
-  geom_smooth(method = "lm", se = FALSE, color = "red", linewidth = 1) +
+# Plot 3: Overlay histogram of G1 and G3
+overlay_histogram <- balanced_data |>
+  ggplot() +
+  geom_histogram(aes(x = G1), binwidth = 1, fill = "darkred", color = "black", alpha = 0.5) +
+  geom_histogram(aes(x = G3), binwidth = 1, fill = "darkblue", color = "black", alpha = 0.5) +
   labs(
-    title = "Scatter Plot with Jitter and Trend Curve of First vs Final Period Grades",
-    x = "First Period Grade (G1)",
-    y = "Final Period Grade (G3)",
-    caption = ("Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance")) +
+    title = "Overlay Histogram of First and Final Period Grades",
+    x = "Grade",
+    y = "Frequency",
+    caption = "Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
     plot.caption = element_text(hjust = 0)
   )
 
-print(scatter_plot_trend)
+print(overlay_histogram)
 ```
 
-We enhance the scatter plot by adding a trend line using `geom_smooth()` with the method set to linear model (`lm`). The trend line helps to visualize the overall relationship between the first period grades (G1) and the final period grades (G3). The trend line is colored red and is slightly thicker for better visibility.
+We create an overlay histogram to visualize the distribution of both the first period grades (G1) and the final period grades (G3) in the same plot. This allows for comparison between the two distributions. The bins for G1 are colored dark red, and the bins for G3 are colored dark blue, both with black borders and slight transparency.
 
 ### Discussion and Insights
 
-The trend curve in Plot 3 shows a positive correlation between the first period grades (G1) and the final period grades (G3). This indicates that students who perform well initially tend to maintain their performance throughout the course. The use of jitter in the plot helps to mitigate the effect of overplotting, making it easier to see the distribution of data points.
+The histograms provide a clear view of the distribution of grades. The first period grades (G1) and the final period grades (G3) show a similar pattern, suggesting consistency in student performance throughout the course. The overlay histogram helps to compare the two distributions directly, revealing any shifts or trends in performance from the first to the final period.
+
 
 # Task 3: Visualizing Michelson’s Speed-of-Light Measurements
 
