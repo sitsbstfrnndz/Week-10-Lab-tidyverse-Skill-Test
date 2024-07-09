@@ -13,7 +13,7 @@ library(tidyverse)
 library(gt)
 ```
 
-```r
+``` r
 library(tidyverse)
 library(gt)
 ```
@@ -142,20 +142,18 @@ league_table %>%
 
 In the improved visualization, we:
 
-- **Added a Title**:
-  - The title "English Premier League 2019-2020 Season League Table" clearly indicates the table's content.
+-   **Added a Title**:
+    -   The title "English Premier League 2019-2020 Season League Table" clearly indicates the table's content.
+-   **Colored Columns**:
+    -   **Points Column**: Applied a gradient from red (low points) to green (high points) to highlight team performance.
+    -   **Goal Difference (goal_diff) Column**: Used a gradient from red (negative goal difference) to green (positive goal difference) to indicate defensive performance.
+    -   **Goals For (goals_for) Column**: Implemented a gradient from red (low goals) to green (high goals) to indicate offensive performance.
+-   **Styled the Table**:
+    -   Utilized the Arial font for improved readability.
+    -   Adjusted font sizes to enhance clarity and visual appeal.
 
-- **Colored Columns**:
-  - **Points Column**: Applied a gradient from red (low points) to green (high points) to highlight team performance.
-  - **Goal Difference (goal_diff) Column**: Used a gradient from red (negative goal difference) to green (positive goal difference) to indicate defensive performance.
-  - **Goals For (goals_for) Column**: Implemented a gradient from red (low goals) to green (high goals) to indicate offensive performance.
-
-- **Styled the Table**:
-  - Utilized the Arial font for improved readability.
-  - Adjusted font sizes to enhance clarity and visual appeal.
-  
 # Task 2: Finding and Visualizing a Real-World Dataset
-  
+
 ## 2.1 Use R Code to Validate Conditions C, D, and E for Your Data
 
 **Loading the Dataset**
@@ -225,7 +223,15 @@ cat("New number of observations:", new_num_observations, "\n")
 ```
 ## 2.2 Plot 1 – Generate a Histogram for One of the Quantitative Variables
 
+<<<<<<< Updated upstream
 **Creating a Basic Histogram**
+=======
+We check for duplicated points in the dataset, ensuring that there are pairs of data points with identical or nearly identical values. This is important for demonstrating strategies to mitigate overplotting. We also display a few rows of the duplicated points to visually confirm their presence.
+
+#### 2.2 Plot 1 – Generate a Scatter Plot Using geom_point()
+
+**Creating a Basic Scatter Plot**
+>>>>>>> Stashed changes
 
 ```{r}
 # Plot 1: Basic histogram
@@ -332,47 +338,52 @@ scatter1 <- ggplot(morley, aes(x = factor(Expt), y = Speed)) +
   labs(
     title = "Scatter plot of Experiment Number vs. Measured Speeds",
     x = "Experiment Number",
-    y = "Speed",
+    y = "Speed (in km/s minus 299,000)",
     caption = "R data set 'morley'"
   ) +
+  theme_minimal() +  # Using a minimal theme for a cleaner look
   theme(
-    plot.title = element_text(hjust = 0.5),  # Center the title
-    axis.text.x = element_text(angle = 0, vjust = 1, hjust = 0.5),  # Keep x-axis labels straight
-    axis.title.x = element_text(face = "bold"),
-    axis.title.y = element_text(face = "bold")
-  ) +
+    legend.position = "none",
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    plot.subtitle = element_text(hjust = 0.5, face = "italic", size = 12),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    plot.caption = element_text(size = 8)
+  )+
   coord_flip()
 
 print(scatter1)
 ```
 
-
 ## 3.3 Plot 2 – Create a Box Plot Measured Speeds with One Box Experiment
 
 ```{r}
 boxplot1 <- ggplot(morley, aes(x = factor(Expt), y = Speed, fill = factor(Expt))) +
-  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2, alpha = 0.6) +  
-  geom_jitter(width = 0.1, size = 1, alpha = 0.6, color = "darkblue") +  
+  geom_boxplot(outlier.colour = "red", outlier.shape = 16, outlier.size = 2, alpha = 0.4) +
+  geom_jitter(width = 0.2, size = 1, alpha = 0.7, color = "black") +  # Adding jittered points for better visibility
   labs(
     title = "Box Plot of Measured Speeds by Experiment",
+    subtitle = "Visualizing the spread and outliers of speed measurements",
     x = "Experiment Number",
-    y = "Speed",
+    y = "Speed (km/s minus 299,000)",
     caption = "R data set 'morley'"
   ) +
+  theme_minimal() +  # Using a minimal theme for a cleaner look
   theme(
-    legend.position = "none", 
-    plot.title = element_text(hjust = 0.5),  
-    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),  
-    axis.title.x = element_text(face = "bold"),
-    axis.title.y = element_text(face = "bold")
+    legend.position = "none",
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    plot.subtitle = element_text(hjust = 0.5, face = "italic", size = 12),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    plot.caption = element_text(size = 8)
   ) +
-  scale_fill_brewer(palette = "Set3") +  
-  coord_flip()  
+  scale_fill_brewer(palette = "Set2") +
+  coord_flip()
 
 print(boxplot1)
-
 ```
-
 
 ## 3.4 Plot 3 – Add a Violin Plot in Plot 2
 
@@ -380,51 +391,105 @@ print(boxplot1)
 
 p <- ggplot(morley, aes(x = factor(Expt), y = Speed, fill = factor(Expt))) +
   geom_violin(trim = FALSE, alpha = 0.4) +  
-  geom_boxplot(width = 0.1, fill = "white", colour = "black", outlier.shape = NA) + 
-  geom_jitter(width = 0.1, size = 1, alpha = 0.5, color = "darkblue") + 
+  geom_boxplot(width = 0.1, fill = "white", colour = "black", outlier.colour = "red", outlier.shape = 16, outlier.size = 2, alpha = 0.8) + 
+  geom_jitter(width = 0.2, size = 1, alpha = 0.6, color = "black") + 
   labs(
     title = "Violin Plot of Measured Speeds by Experiment",
     x = "Experiment Number",
-    y = "Speed",
+    y = "Speed (in km/s minus 299,000)",
     caption = "Data sourced from the Morley dataset"
   ) +
+  theme_minimal() +  # Using a minimal theme for a cleaner look
   theme(
-    legend.position = "none",  
-    plot.title = element_text(hjust = 0.5),  
-    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),  
-    axis.title.x = element_text(face = "bold"),
-    axis.title.y = element_text(face = "bold")
+    legend.position = "none",
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    plot.subtitle = element_text(hjust = 0.5, face = "italic", size = 12),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    plot.caption = element_text(size = 8)
   ) +
-  scale_fill_brewer(palette = "Pastel1") + 
+  scale_fill_brewer(palette = "Set2") + 
   coord_flip() 
 
 print(p)
 
 ```
 
-
 ## 3.5 Plot 4 – Create a Faceted Plot Containing 5 Histograms
 
 ```{r}
-ggplot(morley, aes(x = Speed)) +
-  geom_histogram(binwidth = 20, fill = "grey", color = "black") +
+ggplot(morley, aes(x = Speed, fill = factor(Expt))) +
+  geom_histogram(binwidth = 20, color = "black", alpha = 0.6) +  # Applying fill color to histograms
   facet_wrap(~Expt, scales = "free_x") +
-  labs(title = "Histograms of Measured Speeds by Experiment",
-       caption = "R data set 'morley'") +
-  theme_minimal() +
+  labs(
+    title = "Histograms of Measured Speeds by Experiment",
+    x = "Speed (in km/s minus 299,000)",
+    y = "Count",
+    caption = "R data set 'morley'"
+  ) +
+  theme_minimal() +  # Using a minimal theme for a cleaner look
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  )
+    legend.position = "none",
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+    plot.subtitle = element_text(hjust = 0.5, face = "italic", size = 12),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    plot.caption = element_text(size = 8)
+  ) +
+  scale_fill_brewer(palette = "Set2")  # Using the same color palette
+
 ```
 
 ## 3.6 Discuss Your Choice Among the 4 Visualization Plots
 
-Scatter Plot Pros: Simplicity, Mean Highlighting, and Transparency. Cons: Overplotting, Lack of Distribution Information.
+#### 1. Plot 1 - Scatter Plot of Experiment Number vs. Measured Speeds
 
-Box Plot Pros: Sumarises the data distribution. Cons: Visual clutter.
+**Pros**:
 
-Violin Plot Pros: Shows distribution density, includes box plot and individual data points. Cons:Visual clutter, difficult to interpret.
+-   **Simplicity**: Easy to understand and interpret.
+-   **Individual Data Points**: Each measurement is clearly visible, helping to identify exact values.
+-   **Outliers Highlighted**: Outliers are easily noticeable.
 
-Histogram Pros: Shows distribution of data, easy to interpret. Cons: Lack of individual data points, no summary of points.
+**Cons**: - **Overplotting**: Multiple data points with the same value can overlap, making it difficult to see the exact number of occurrences. - **Lack of Distribution Information**: Does not provide a clear view of the data distribution within each experiment.
 
-Among the presented graphs, Graph 3: Violin Plot is the best option for comprehensively visualizing the dataset. This graph adeptly combines the advantages of both violin plots and box plots, offering a detailed view of the data distribution while also providing essential summary statistics. The violin plot's smooth shapes reveal the density and modality of the data, giving an immediate sense of the distribution's spread and central tendencies. The overlaid box plots succinctly highlight the median, quartiles, and potential outliers, while the individual jittered data points ensure that all observations are visible, mitigating issues of overplotting. Despite the potential for visual clutter, this graph's rich detail makes it highly informative for audiences familiar with such complex visualizations. Therefore, Graph 3 is the optimal choice for in-depth analysis and presentation of the Morley dataset's measured speeds across different experiments, balancing visual appeal with comprehensive data representation.
+#### 2. Plot 2 - Box Plot of Measured Speeds by Experiment
+
+**Pros**: 
+-   **Summarizes Data Distribution**: Clearly shows the median, quartiles, and potential outliers. 
+-   **Comparison**: Makes it easy to compare the distribution across different experiments.
+
+**Cons**: 
+-   **Visual Clutter**: Can become cluttered with a large number of outliers or tightly packed data points. 
+-   **Limited Distribution Detail**: Does not show the density or modality of the data within each group.
+
+#### 3. Plot 3 - Violin Plot of Measured Speeds by Experiment
+
+**Pros**: 
+-   **Distribution Density**: Shows the density and modality of the data, providing a clear view of the distribution's shape. 
+-   **Combination of Plots**: Includes elements of a box plot (median, quartiles) and individual data points, providing a comprehensive view.
+
+**Cons**: 
+-   **Visual Clutter**: Can be visually overwhelming with many elements combined. 
+-   **Complexity**: May be difficult for some audiences to interpret.
+
+#### 4. Plot 4 - Faceted Histograms of Measured Speeds by Experiment
+
+**Pros**: 
+-   **Distribution Visualization**: Clearly shows the distribution of data within each experiment. 
+-   **Easy to Interpret**: Simple and straightforward, making it easy to understand the data spread.
+
+**Cons**: 
+-   **No Individual Data Points**: Does not show individual measurements. 
+-   **No Summary Statistics**: Lacks a summary of the median, quartiles, and outliers.
+
+### Best Visualization
+
+Among the presented graphs, the **Violin Plot** stands out as the best option for comprehensively visualizing the dataset. This plot effectively combines the advantages of both violin plots and box plots, offering a detailed view of the data distribution while also providing essential summary statistics.
+
+-   **Distribution Density**: The violin plot's smooth shapes reveal the density and modality of the data, giving an immediate sense of the distribution's spread and central tendencies.
+-   **Summary Statistics**: The overlaid box plots succinctly highlight the median, quartiles, and potential outliers.
+-   **Individual Data Points**: The jittered points ensure that all observations are visible, mitigating issues of overplotting.
+
+Despite the potential for visual clutter, this graph's rich detail makes it highly informative for audiences familiar with such complex visualizations. Therefore, the Violin Plot is the optimal choice for in-depth analysis and presentation of the Morley dataset's measured speeds across different experiments, balancing visual appeal with comprehensive data representation.
