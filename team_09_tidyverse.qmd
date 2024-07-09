@@ -1,10 +1,10 @@
 ---
-title: "team_01_tidyverse"
-format: html
-html:
-  toc: true
-  toc_depth: true
-  embed-resources: true
+title: "team_09_tidyverse"
+format: 
+  html:
+    toc: true
+    toc_depth: true
+    embed-resources: true
 editor: visual
 ---
 
@@ -194,7 +194,7 @@ group_counts <- student_data |>
   summarise(count = n()) |>
   arrange(desc(count))
 
-gt_preview(group_counts)
+group_counts
 ```
 
 ### Drop the extra rows to make the dataset less than 200 and also more balanced
@@ -217,7 +217,7 @@ new_group_counts <- balanced_data |>
   summarise(count = n()) |>
   arrange(desc(count))
 
-gt_preview(new_group_counts)
+new_group_counts
 
 # Validate the new number of observations
 new_num_observations <- nrow(balanced_data)
