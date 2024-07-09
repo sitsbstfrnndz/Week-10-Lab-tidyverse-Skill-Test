@@ -23,10 +23,6 @@ results <- read_csv("epl/epl_results.csv",show_col_types = FALSE)
 teams <- read_csv("epl/epl_teams.csv",show_col_types = FALSE)
 ```
 
-```{r}
-gt_preview(results)
-```
-
 # Task 1: Converting EPL Football Results into a League Table
 
 ```{r setup, include=TRUE}
