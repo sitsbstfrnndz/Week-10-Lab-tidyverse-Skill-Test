@@ -156,7 +156,7 @@ In the improved visualization, we:
 
 ## 2.1 Use R Code to Validate Conditions C, D, and E for Your Data
 
-**Loading the Dataset**
+### Load Dataset
 
 ```{r}
 # Load the dataset from local file
@@ -223,15 +223,7 @@ cat("New number of observations:", new_num_observations, "\n")
 ```
 ## 2.2 Plot 1 – Generate a Histogram for One of the Quantitative Variables
 
-<<<<<<< Updated upstream
-**Creating a Basic Histogram**
-=======
 We check for duplicated points in the dataset, ensuring that there are pairs of data points with identical or nearly identical values. This is important for demonstrating strategies to mitigate overplotting. We also display a few rows of the duplicated points to visually confirm their presence.
-
-#### 2.2 Plot 1 – Generate a Scatter Plot Using geom_point()
-
-**Creating a Basic Scatter Plot**
->>>>>>> Stashed changes
 
 ```{r}
 # Plot 1: Basic histogram
@@ -257,8 +249,6 @@ We create a basic histogram to visualize the distribution of the first period gr
 
 ## 2.3 Plot 2 – Generate a Histogram for Another Quantitative Variable
 
-**Creating a Basic Histogram for the Final Grades**
-
 ```{r}
 # Plot 2: Basic histogram for final grades
 histogram_G3 <- balanced_data |>
@@ -282,8 +272,6 @@ print(histogram_G3)
 We create a basic histogram to visualize the distribution of the final period grades (G3). The bins are colored dark blue with black borders and are slightly transparent to help with visibility.
 
 ## 2.4 Plot 3 – Overlay Histograms of Both Quantitative Variables
-
-**Creating an Overlay Histogram**
 
 ```{r}
 # Plot 3: Overlay histogram of G1 and G3
@@ -452,35 +440,44 @@ ggplot(morley, aes(x = Speed, fill = factor(Expt))) +
 -   **Individual Data Points**: Each measurement is clearly visible, helping to identify exact values.
 -   **Outliers Highlighted**: Outliers are easily noticeable.
 
-**Cons**: - **Overplotting**: Multiple data points with the same value can overlap, making it difficult to see the exact number of occurrences. - **Lack of Distribution Information**: Does not provide a clear view of the data distribution within each experiment.
+**Cons**: 
+
+-   **Overplotting**: Multiple data points with the same value can overlap, making it difficult to see the exact number of occurrences. 
+-   **Lack of Distribution Information**: Does not provide a clear view of the data distribution within each experiment.
 
 #### 2. Plot 2 - Box Plot of Measured Speeds by Experiment
 
 **Pros**: 
+
 -   **Summarizes Data Distribution**: Clearly shows the median, quartiles, and potential outliers. 
 -   **Comparison**: Makes it easy to compare the distribution across different experiments.
 
 **Cons**: 
+
 -   **Visual Clutter**: Can become cluttered with a large number of outliers or tightly packed data points. 
 -   **Limited Distribution Detail**: Does not show the density or modality of the data within each group.
 
 #### 3. Plot 3 - Violin Plot of Measured Speeds by Experiment
 
 **Pros**: 
+
 -   **Distribution Density**: Shows the density and modality of the data, providing a clear view of the distribution's shape. 
 -   **Combination of Plots**: Includes elements of a box plot (median, quartiles) and individual data points, providing a comprehensive view.
 
 **Cons**: 
+
 -   **Visual Clutter**: Can be visually overwhelming with many elements combined. 
 -   **Complexity**: May be difficult for some audiences to interpret.
 
 #### 4. Plot 4 - Faceted Histograms of Measured Speeds by Experiment
 
 **Pros**: 
+
 -   **Distribution Visualization**: Clearly shows the distribution of data within each experiment. 
 -   **Easy to Interpret**: Simple and straightforward, making it easy to understand the data spread.
 
 **Cons**: 
+
 -   **No Individual Data Points**: Does not show individual measurements. 
 -   **No Summary Statistics**: Lacks a summary of the median, quartiles, and outliers.
 
