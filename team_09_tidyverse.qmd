@@ -8,6 +8,25 @@ html:
 editor: visual
 ---
 
+```{r, include=FALSE}
+library(tidyverse)
+library(gt)
+```
+
+```r
+library(tidyverse)
+library(gt)
+```
+
+```{r}
+results <- read_csv("epl/epl_results.csv",show_col_types = FALSE)
+teams <- read_csv("epl/epl_teams.csv",show_col_types = FALSE)
+```
+
+```{r}
+gt_preview(results)
+```
+
 # Task 1: Converting EPL Football Results into a League Table
 
 ```{r setup, include=TRUE}
@@ -97,7 +116,7 @@ print(league_table)
 
 ```
 
-# Task 2: Finding and Visualizing a Real-World Dataset
+### Task 2: Finding and Visualizing a Real-World Dataset
 
 ```{r}
 # Improve the visualization of the league table
@@ -107,19 +126,140 @@ print(league_table)
 
 ## 2.1 Use R Code to Validate Conditions C, D, and E for Your Data
 
-...
+**Loading the Dataset**
 
-## 2.2 Plot 1 – Generate a Scatter Plot Using geom_point()
+```{r}
+# Load the dataset from local file
+student_data <- read.csv("data/student-mat.csv", header = TRUE, sep = ";")
+```
 
-...
+This data ([Source](https://archive.ics.uci.edu/ml/datasets/Student+Performance)) approaches student achievement in secondary education (math) of two Portuguese schools. The data attributes include student grades, demographic, social, and school-related features, and it was collected by using school reports and questionnaires.
 
-## 2.3 Plot 2 – Create an Improved Plot to Mitigate Overplotting
+**Validating Condition C: Number of Observations**
 
-...
+```{r}
+# Validate condition C: Number of observations
+num_observations <- student_data |>
+  nrow()
+cat("Number of observations:", num_observations, "\n")
+```
 
-##2.4 Plot 3 – Add a Trend Curve in Plot 2 and Discuss Insights
+We check the number of observations in the dataset. The output will display the total number of rows (observations). The dataset should contain between 20 and 200 observations.
 
-...
+**Validating Condition D: At Least Two Quantitative Variables**
+
+```{r}
+# Validate condition D: At least two quantitative variables
+quant_vars <- student_data |>
+  select(where(is.numeric)) |>
+  names()
+cat("Quantitative variables:", paste(quant_vars, collapse = ", "), "\n")
+```
+
+We identify and list all quantitative variables in the dataset. This ensures that we have at least two quantitative variables to use in our scatter plot.
+
+**Validating Condition E: Identical or Nearly Identical Values**
+
+```{r}
+# Validate condition E: Identical or nearly identical values
+duplicated_points <- student_data |>
+  group_by(G1, G3) |>
+  filter(n() > 1) |>
+  ungroup()
+
+if (nrow(duplicated_points) > 0) {
+  cat("Condition E validated: There are duplicated points.\n")
+} else {
+  cat("Condition E not validated: No duplicated points found.\n")
+}
+
+# Display some duplicated points
+gt_preview(duplicated_points)
+```
+
+We check for duplicated points in the dataset, ensuring that there are pairs of data points with identical or nearly identical values. This is important for demonstrating strategies to mitigate overplotting. We also display a few rows of the duplicated points to visually confirm their presence.
+
+
+
+#### 2.2 Plot 1 – Generate a Scatter Plot Using geom_point()
+
+**Creating a Basic Scatter Plot**
+
+```{r}
+# Plot 1: Basic scatter plot
+scatter_plot <- student_data |>
+  ggplot(aes(x = G1, y = G3)) +
+  geom_point(color = "darkred", alpha = 0.7) +
+  labs(
+    title = "Scatter Plot of First vs Final Period Grades",
+    x = "First Period Grade (G1)",
+    y = "Final Period Grade (G3)",
+    caption = ("Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance")) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.caption = element_text(hjust = 0)
+  )
+
+print(scatter_plot)
+```
+
+We create a basic scatter plot to visualize the relationship between the first period grades (G1) and the final period grades (G3). The points are colored dark red and are slightly transparent to help with visibility.
+
+#### 2.3 Plot 2 – Create an Improved Plot to Mitigate Overplotting
+
+**Creating a Scatter Plot with Jitter**
+
+```{r}
+# Plot 2: Scatter plot with jitter to reduce overplotting
+scatter_plot_jitter <- student_data |>
+  ggplot(aes(x = G1, y = G3)) +
+  geom_jitter(width = 0.2, height = 0.2, color = "darkblue", alpha = 0.7) +
+  labs(
+    title = "Scatter Plot with Jitter of First vs Final Period Grades",
+    x = "First Period Grade (G1)",
+    y = "Final Period Grade (G3)",
+    caption = ("Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance")) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.caption = element_text(hjust = 0)
+  )
+
+print(scatter_plot_jitter)
+```
+
+We create an improved scatter plot using `geom_jitter()` to add slight random noise to the data points. This helps to reduce overplotting by spreading out points that have identical or nearly identical values. The points are colored dark blue and are semi-transparent.
+
+#### 2.4 Plot 3 – Add a Trend Curve in Plot 2 and Discuss Insights
+
+**Adding a Trend Curve to the Scatter Plot with Jitter**
+
+```{r}
+# Plot 3: Scatter plot with jitter and trend curve
+scatter_plot_trend <- student_data |>
+  ggplot(aes(x = G1, y = G3)) +
+  geom_jitter(width = 0.2, height = 0.2, color = "darkblue", alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, color = "red", linewidth = 1) +
+  labs(
+    title = "Scatter Plot with Jitter and Trend Curve of First vs Final Period Grades",
+    x = "First Period Grade (G1)",
+    y = "Final Period Grade (G3)",
+    caption = ("Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance")) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.caption = element_text(hjust = 0)
+  )
+
+print(scatter_plot_trend)
+```
+
+We enhance the scatter plot by adding a trend line using `geom_smooth()` with the method set to linear model (`lm`). The trend line helps to visualize the overall relationship between the first period grades (G1) and the final period grades (G3). The trend line is colored red and is slightly thicker for better visibility.
+
+### Discussion and Insights
+
+The trend curve in Plot 3 shows a positive correlation between the first period grades (G1) and the final period grades (G3). This indicates that students who perform well initially tend to maintain their performance throughout the course. The use of jitter in the plot helps to mitigate the effect of overplotting, making it easier to see the distribution of data points.
 
 # Task 3: Visualizing Michelson’s Speed-of-Light Measurements
 
