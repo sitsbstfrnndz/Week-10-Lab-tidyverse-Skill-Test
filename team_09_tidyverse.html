@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>team_01_tidyverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="team_09_tidyverse_files/libs/clipboard/clipboard.min.js"></script>
+<script src="team_09_tidyverse_files/libs/quarto-html/quarto.js"></script>
+<script src="team_09_tidyverse_files/libs/quarto-html/popper.min.js"></script>
+<script src="team_09_tidyverse_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="team_09_tidyverse_files/libs/quarto-html/anchor.min.js"></script>
+<link href="team_09_tidyverse_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="team_09_tidyverse_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="team_09_tidyverse_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="team_09_tidyverse_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="team_09_tidyverse_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">team_01_tidyverse</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"epl/epl_results.csv"</span>,<span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>teams <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"epl/epl_teams.csv"</span>,<span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gt_preview</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<div id="qknyvwyrmd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qknyvwyrmd table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#qknyvwyrmd thead, #qknyvwyrmd tbody, #qknyvwyrmd tfoot, #qknyvwyrmd tr, #qknyvwyrmd td, #qknyvwyrmd th {
+  border-style: none;
+}
+
+#qknyvwyrmd p {
+  margin: 0;
+  padding: 0;
+}
+
+#qknyvwyrmd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qknyvwyrmd .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qknyvwyrmd .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qknyvwyrmd .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#qknyvwyrmd .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#qknyvwyrmd .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#qknyvwyrmd .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#qknyvwyrmd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#qknyvwyrmd .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#qknyvwyrmd .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#qknyvwyrmd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#qknyvwyrmd .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#qknyvwyrmd .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#qknyvwyrmd .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#qknyvwyrmd .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qknyvwyrmd .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#qknyvwyrmd .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#qknyvwyrmd .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#qknyvwyrmd .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qknyvwyrmd .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#qknyvwyrmd .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qknyvwyrmd .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#qknyvwyrmd .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qknyvwyrmd .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qknyvwyrmd .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qknyvwyrmd .gt_left {
+  text-align: left;
+}
+
+#qknyvwyrmd .gt_center {
+  text-align: center;
+}
+
+#qknyvwyrmd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qknyvwyrmd .gt_font_normal {
+  font-weight: normal;
+}
+
+#qknyvwyrmd .gt_font_bold {
+  font-weight: bold;
+}
+
+#qknyvwyrmd .gt_font_italic {
+  font-style: italic;
+}
+
+#qknyvwyrmd .gt_super {
+  font-size: 65%;
+}
+
+#qknyvwyrmd .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#qknyvwyrmd .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#qknyvwyrmd .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#qknyvwyrmd .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#qknyvwyrmd .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#qknyvwyrmd .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#qknyvwyrmd .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
+<th id="home_team" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">home_team</th>
+<th id="ars" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">ars</th>
+<th id="avl" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">avl</th>
+<th id="bou" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">bou</th>
+<th id="bha" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">bha</th>
+<th id="bur" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">bur</th>
+<th id="che" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">che</th>
+<th id="cry" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">cry</th>
+<th id="eve" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">eve</th>
+<th id="lei" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">lei</th>
+<th id="liv" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">liv</th>
+<th id="mci" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">mci</th>
+<th id="mun" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">mun</th>
+<th id="new" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">new</th>
+<th id="nor" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">nor</th>
+<th id="shu" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">shu</th>
+<th id="sou" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">sou</th>
+<th id="tot" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">tot</th>
+<th id="wat" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">wat</th>
+<th id="whu" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">whu</th>
+<th id="wol" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">wol</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td id="stub_1_1" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">1</td>
+<td class="gt_row gt_left" headers="stub_1_1 home_team">ars</td>
+<td class="gt_row gt_right" headers="stub_1_1 ars">-</td>
+<td class="gt_row gt_right" headers="stub_1_1 avl">3-2</td>
+<td class="gt_row gt_right" headers="stub_1_1 bou">1-0</td>
+<td class="gt_row gt_right" headers="stub_1_1 bha">1-2</td>
+<td class="gt_row gt_right" headers="stub_1_1 bur">2-1</td>
+<td class="gt_row gt_right" headers="stub_1_1 che">1-2</td>
+<td class="gt_row gt_right" headers="stub_1_1 cry">2-2</td>
+<td class="gt_row gt_right" headers="stub_1_1 eve">3-2</td>
+<td class="gt_row gt_right" headers="stub_1_1 lei">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_1 liv">2-1</td>
+<td class="gt_row gt_right" headers="stub_1_1 mci">0-3</td>
+<td class="gt_row gt_right" headers="stub_1_1 mun">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_1 new">4-0</td>
+<td class="gt_row gt_right" headers="stub_1_1 nor">4-0</td>
+<td class="gt_row gt_right" headers="stub_1_1 shu">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_1 sou">2-2</td>
+<td class="gt_row gt_right" headers="stub_1_1 tot">2-2</td>
+<td class="gt_row gt_right" headers="stub_1_1 wat">3-2</td>
+<td class="gt_row gt_right" headers="stub_1_1 whu">1-0</td>
+<td class="gt_row gt_right" headers="stub_1_1 wol">1-1</td>
+</tr>
+<tr class="even">
+<td id="stub_1_2" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">2</td>
+<td class="gt_row gt_left" headers="stub_1_2 home_team">avl</td>
+<td class="gt_row gt_right" headers="stub_1_2 ars">1-0</td>
+<td class="gt_row gt_right" headers="stub_1_2 avl">-</td>
+<td class="gt_row gt_right" headers="stub_1_2 bou">1-2</td>
+<td class="gt_row gt_right" headers="stub_1_2 bha">2-1</td>
+<td class="gt_row gt_right" headers="stub_1_2 bur">2-2</td>
+<td class="gt_row gt_right" headers="stub_1_2 che">1-2</td>
+<td class="gt_row gt_right" headers="stub_1_2 cry">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_2 eve">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_2 lei">1-4</td>
+<td class="gt_row gt_right" headers="stub_1_2 liv">1-2</td>
+<td class="gt_row gt_right" headers="stub_1_2 mci">1-6</td>
+<td class="gt_row gt_right" headers="stub_1_2 mun">0-3</td>
+<td class="gt_row gt_right" headers="stub_1_2 new">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_2 nor">1-0</td>
+<td class="gt_row gt_right" headers="stub_1_2 shu">0-0</td>
+<td class="gt_row gt_right" headers="stub_1_2 sou">1-3</td>
+<td class="gt_row gt_right" headers="stub_1_2 tot">2-3</td>
+<td class="gt_row gt_right" headers="stub_1_2 wat">2-1</td>
+<td class="gt_row gt_right" headers="stub_1_2 whu">0-0</td>
+<td class="gt_row gt_right" headers="stub_1_2 wol">0-1</td>
+</tr>
+<tr class="odd">
+<td id="stub_1_3" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">3</td>
+<td class="gt_row gt_left" headers="stub_1_3 home_team">bou</td>
+<td class="gt_row gt_right" headers="stub_1_3 ars">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_3 avl">2-1</td>
+<td class="gt_row gt_right" headers="stub_1_3 bou">-</td>
+<td class="gt_row gt_right" headers="stub_1_3 bha">3-1</td>
+<td class="gt_row gt_right" headers="stub_1_3 bur">0-1</td>
+<td class="gt_row gt_right" headers="stub_1_3 che">2-2</td>
+<td class="gt_row gt_right" headers="stub_1_3 cry">0-2</td>
+<td class="gt_row gt_right" headers="stub_1_3 eve">3-1</td>
+<td class="gt_row gt_right" headers="stub_1_3 lei">4-1</td>
+<td class="gt_row gt_right" headers="stub_1_3 liv">0-3</td>
+<td class="gt_row gt_right" headers="stub_1_3 mci">1-3</td>
+<td class="gt_row gt_right" headers="stub_1_3 mun">1-0</td>
+<td class="gt_row gt_right" headers="stub_1_3 new">1-4</td>
+<td class="gt_row gt_right" headers="stub_1_3 nor">0-0</td>
+<td class="gt_row gt_right" headers="stub_1_3 shu">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_3 sou">0-2</td>
+<td class="gt_row gt_right" headers="stub_1_3 tot">0-0</td>
+<td class="gt_row gt_right" headers="stub_1_3 wat">0-3</td>
+<td class="gt_row gt_right" headers="stub_1_3 whu">2-2</td>
+<td class="gt_row gt_right" headers="stub_1_3 wol">1-2</td>
+</tr>
+<tr class="even">
+<td id="stub_1_4" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">4</td>
+<td class="gt_row gt_left" headers="stub_1_4 home_team">bha</td>
+<td class="gt_row gt_right" headers="stub_1_4 ars">2-1</td>
+<td class="gt_row gt_right" headers="stub_1_4 avl">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_4 bou">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_4 bha">-</td>
+<td class="gt_row gt_right" headers="stub_1_4 bur">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_4 che">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_4 cry">0-1</td>
+<td class="gt_row gt_right" headers="stub_1_4 eve">3-2</td>
+<td class="gt_row gt_right" headers="stub_1_4 lei">0-2</td>
+<td class="gt_row gt_right" headers="stub_1_4 liv">1-3</td>
+<td class="gt_row gt_right" headers="stub_1_4 mci">0-5</td>
+<td class="gt_row gt_right" headers="stub_1_4 mun">0-3</td>
+<td class="gt_row gt_right" headers="stub_1_4 new">0-0</td>
+<td class="gt_row gt_right" headers="stub_1_4 nor">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_4 shu">0-1</td>
+<td class="gt_row gt_right" headers="stub_1_4 sou">0-2</td>
+<td class="gt_row gt_right" headers="stub_1_4 tot">3-0</td>
+<td class="gt_row gt_right" headers="stub_1_4 wat">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_4 whu">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_4 wol">2-2</td>
+</tr>
+<tr class="odd">
+<td id="stub_1_5" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">5</td>
+<td class="gt_row gt_left" headers="stub_1_5 home_team">bur</td>
+<td class="gt_row gt_right" headers="stub_1_5 ars">0-0</td>
+<td class="gt_row gt_right" headers="stub_1_5 avl">1-2</td>
+<td class="gt_row gt_right" headers="stub_1_5 bou">3-0</td>
+<td class="gt_row gt_right" headers="stub_1_5 bha">1-2</td>
+<td class="gt_row gt_right" headers="stub_1_5 bur">-</td>
+<td class="gt_row gt_right" headers="stub_1_5 che">2-4</td>
+<td class="gt_row gt_right" headers="stub_1_5 cry">0-2</td>
+<td class="gt_row gt_right" headers="stub_1_5 eve">1-0</td>
+<td class="gt_row gt_right" headers="stub_1_5 lei">2-1</td>
+<td class="gt_row gt_right" headers="stub_1_5 liv">0-3</td>
+<td class="gt_row gt_right" headers="stub_1_5 mci">1-4</td>
+<td class="gt_row gt_right" headers="stub_1_5 mun">0-2</td>
+<td class="gt_row gt_right" headers="stub_1_5 new">1-0</td>
+<td class="gt_row gt_right" headers="stub_1_5 nor">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_5 shu">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_5 sou">3-0</td>
+<td class="gt_row gt_right" headers="stub_1_5 tot">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_5 wat">1-0</td>
+<td class="gt_row gt_right" headers="stub_1_5 whu">3-0</td>
+<td class="gt_row gt_right" headers="stub_1_5 wol">1-1</td>
+</tr>
+<tr class="even">
+<td id="stub_1_6" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier; font-size: x-small; background-color: #E4E4E4">6..19</td>
+<td class="gt_row gt_left" headers="stub_1_6 home_team" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 ars" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 avl" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 bou" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 bha" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 bur" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 che" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 cry" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 eve" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 lei" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 liv" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 mci" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 mun" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 new" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 nor" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 shu" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 sou" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 tot" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 wat" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 whu" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 wol" style="background-color: #E4E4E4"></td>
+</tr>
+<tr class="odd">
+<td id="stub_1_7" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">20</td>
+<td class="gt_row gt_left" headers="stub_1_7 home_team">wol</td>
+<td class="gt_row gt_right" headers="stub_1_7 ars">0-2</td>
+<td class="gt_row gt_right" headers="stub_1_7 avl">2-1</td>
+<td class="gt_row gt_right" headers="stub_1_7 bou">1-0</td>
+<td class="gt_row gt_right" headers="stub_1_7 bha">0-0</td>
+<td class="gt_row gt_right" headers="stub_1_7 bur">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_7 che">2-5</td>
+<td class="gt_row gt_right" headers="stub_1_7 cry">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_7 eve">3-0</td>
+<td class="gt_row gt_right" headers="stub_1_7 lei">0-0</td>
+<td class="gt_row gt_right" headers="stub_1_7 liv">1-2</td>
+<td class="gt_row gt_right" headers="stub_1_7 mci">3-2</td>
+<td class="gt_row gt_right" headers="stub_1_7 mun">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_7 new">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_7 nor">3-0</td>
+<td class="gt_row gt_right" headers="stub_1_7 shu">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_7 sou">1-1</td>
+<td class="gt_row gt_right" headers="stub_1_7 tot">1-2</td>
+<td class="gt_row gt_right" headers="stub_1_7 wat">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_7 whu">2-0</td>
+<td class="gt_row gt_right" headers="stub_1_7 wol">-</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<section id="task-1-converting-epl-football-results-into-a-league-table" class="level1">
+<h1>Task 1: Converting EPL Football Results into a League Table</h1>
+<section id="generate-a-league-table-from-the-epl-results" class="level2">
+<h2 class="anchored" data-anchor-id="generate-a-league-table-from-the-epl-results">1.1 Generate a League Table from the EPL Results</h2>
+<p>…</p>
+</section>
+<section id="improve-visualization-using-gt-functions" class="level2">
+<h2 class="anchored" data-anchor-id="improve-visualization-using-gt-functions">1.2 Improve Visualization Using <code>gt</code> Functions</h2>
+<p>…</p>
+<section id="task-2-finding-and-visualizing-a-real-world-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="task-2-finding-and-visualizing-a-real-world-dataset">Task 2: Finding and Visualizing a Real-World Dataset</h3>
+<section id="use-r-code-to-validate-conditions-c-d-and-e-for-your-data" class="level4">
+<h4 class="anchored" data-anchor-id="use-r-code-to-validate-conditions-c-d-and-e-for-your-data">2.1 Use R Code to Validate Conditions C, D, and E for Your Data</h4>
+<p><strong>Loading the Dataset</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dataset from local file</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>student_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/student-mat.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">";"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This data (<a href="https://archive.ics.uci.edu/ml/datasets/Student+Performance">Source</a>) approaches student achievement in secondary education (math) of two Portuguese schools. The data attributes include student grades, demographic, social, and school-related features, and it was collected by using school reports and questionnaires.</p>
+<p><strong>Validating Condition C: Number of Observations</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validate condition C: Number of observations</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>num_observations <span class="ot">&lt;-</span> student_data <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of observations:"</span>, num_observations, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of observations: 395 </code></pre>
+</div>
+</div>
+<p>We check the number of observations in the dataset. The output will display the total number of rows (observations). The dataset should contain between 20 and 200 observations.</p>
+<p><strong>Validating Condition D: At Least Two Quantitative Variables</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validate condition D: At least two quantitative variables</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>quant_vars <span class="ot">&lt;-</span> student_data <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Quantitative variables:"</span>, <span class="fu">paste</span>(quant_vars, <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Quantitative variables: age, Medu, Fedu, traveltime, studytime, failures, famrel, freetime, goout, Dalc, Walc, health, absences, G1, G2, G3 </code></pre>
+</div>
+</div>
+<p>We identify and list all quantitative variables in the dataset. This ensures that we have at least two quantitative variables to use in our scatter plot.</p>
+<p><strong>Validating Condition E: Identical or Nearly Identical Values</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validate condition E: Identical or nearly identical values</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>duplicated_points <span class="ot">&lt;-</span> student_data <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(G1, G3) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">nrow</span>(duplicated_points) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Condition E validated: There are duplicated points.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Condition E not validated: No duplicated points found.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Condition E validated: There are duplicated points.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display some duplicated points</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gt_preview</span>(duplicated_points)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<div id="mmulhuwzdn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mmulhuwzdn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mmulhuwzdn thead, #mmulhuwzdn tbody, #mmulhuwzdn tfoot, #mmulhuwzdn tr, #mmulhuwzdn td, #mmulhuwzdn th {
+  border-style: none;
+}
+
+#mmulhuwzdn p {
+  margin: 0;
+  padding: 0;
+}
+
+#mmulhuwzdn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#mmulhuwzdn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mmulhuwzdn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mmulhuwzdn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mmulhuwzdn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mmulhuwzdn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mmulhuwzdn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mmulhuwzdn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mmulhuwzdn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#mmulhuwzdn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#mmulhuwzdn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mmulhuwzdn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mmulhuwzdn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mmulhuwzdn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mmulhuwzdn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mmulhuwzdn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mmulhuwzdn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mmulhuwzdn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#mmulhuwzdn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mmulhuwzdn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mmulhuwzdn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mmulhuwzdn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mmulhuwzdn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mmulhuwzdn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mmulhuwzdn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mmulhuwzdn .gt_left {
+  text-align: left;
+}
+
+#mmulhuwzdn .gt_center {
+  text-align: center;
+}
+
+#mmulhuwzdn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mmulhuwzdn .gt_font_normal {
+  font-weight: normal;
+}
+
+#mmulhuwzdn .gt_font_bold {
+  font-weight: bold;
+}
+
+#mmulhuwzdn .gt_font_italic {
+  font-style: italic;
+}
+
+#mmulhuwzdn .gt_super {
+  font-size: 65%;
+}
+
+#mmulhuwzdn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#mmulhuwzdn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mmulhuwzdn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#mmulhuwzdn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#mmulhuwzdn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#mmulhuwzdn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#mmulhuwzdn .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
+<th id="school" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">school</th>
+<th id="sex" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">sex</th>
+<th id="age" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">age</th>
+<th id="address" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">address</th>
+<th id="famsize" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">famsize</th>
+<th id="Pstatus" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Pstatus</th>
+<th id="Medu" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Medu</th>
+<th id="Fedu" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Fedu</th>
+<th id="Mjob" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Mjob</th>
+<th id="Fjob" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Fjob</th>
+<th id="reason" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">reason</th>
+<th id="guardian" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">guardian</th>
+<th id="traveltime" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">traveltime</th>
+<th id="studytime" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">studytime</th>
+<th id="failures" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">failures</th>
+<th id="schoolsup" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">schoolsup</th>
+<th id="famsup" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">famsup</th>
+<th id="paid" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">paid</th>
+<th id="activities" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">activities</th>
+<th id="nursery" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">nursery</th>
+<th id="higher" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">higher</th>
+<th id="internet" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">internet</th>
+<th id="romantic" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">romantic</th>
+<th id="famrel" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">famrel</th>
+<th id="freetime" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">freetime</th>
+<th id="goout" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">goout</th>
+<th id="Dalc" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Dalc</th>
+<th id="Walc" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Walc</th>
+<th id="health" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">health</th>
+<th id="absences" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">absences</th>
+<th id="G1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">G1</th>
+<th id="G2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">G2</th>
+<th id="G3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">G3</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td id="stub_1_1" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">1</td>
+<td class="gt_row gt_left" headers="stub_1_1 school">GP</td>
+<td class="gt_row gt_left" headers="stub_1_1 sex">F</td>
+<td class="gt_row gt_right" headers="stub_1_1 age">18</td>
+<td class="gt_row gt_left" headers="stub_1_1 address">U</td>
+<td class="gt_row gt_left" headers="stub_1_1 famsize">GT3</td>
+<td class="gt_row gt_left" headers="stub_1_1 Pstatus">A</td>
+<td class="gt_row gt_right" headers="stub_1_1 Medu">4</td>
+<td class="gt_row gt_right" headers="stub_1_1 Fedu">4</td>
+<td class="gt_row gt_left" headers="stub_1_1 Mjob">at_home</td>
+<td class="gt_row gt_left" headers="stub_1_1 Fjob">teacher</td>
+<td class="gt_row gt_left" headers="stub_1_1 reason">course</td>
+<td class="gt_row gt_left" headers="stub_1_1 guardian">mother</td>
+<td class="gt_row gt_right" headers="stub_1_1 traveltime">2</td>
+<td class="gt_row gt_right" headers="stub_1_1 studytime">2</td>
+<td class="gt_row gt_right" headers="stub_1_1 failures">0</td>
+<td class="gt_row gt_left" headers="stub_1_1 schoolsup">yes</td>
+<td class="gt_row gt_left" headers="stub_1_1 famsup">no</td>
+<td class="gt_row gt_left" headers="stub_1_1 paid">no</td>
+<td class="gt_row gt_left" headers="stub_1_1 activities">no</td>
+<td class="gt_row gt_left" headers="stub_1_1 nursery">yes</td>
+<td class="gt_row gt_left" headers="stub_1_1 higher">yes</td>
+<td class="gt_row gt_left" headers="stub_1_1 internet">no</td>
+<td class="gt_row gt_left" headers="stub_1_1 romantic">no</td>
+<td class="gt_row gt_right" headers="stub_1_1 famrel">4</td>
+<td class="gt_row gt_right" headers="stub_1_1 freetime">3</td>
+<td class="gt_row gt_right" headers="stub_1_1 goout">4</td>
+<td class="gt_row gt_right" headers="stub_1_1 Dalc">1</td>
+<td class="gt_row gt_right" headers="stub_1_1 Walc">1</td>
+<td class="gt_row gt_right" headers="stub_1_1 health">3</td>
+<td class="gt_row gt_right" headers="stub_1_1 absences">6</td>
+<td class="gt_row gt_right" headers="stub_1_1 G1">5</td>
+<td class="gt_row gt_right" headers="stub_1_1 G2">6</td>
+<td class="gt_row gt_right" headers="stub_1_1 G3">6</td>
+</tr>
+<tr class="even">
+<td id="stub_1_2" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">2</td>
+<td class="gt_row gt_left" headers="stub_1_2 school">GP</td>
+<td class="gt_row gt_left" headers="stub_1_2 sex">F</td>
+<td class="gt_row gt_right" headers="stub_1_2 age">17</td>
+<td class="gt_row gt_left" headers="stub_1_2 address">U</td>
+<td class="gt_row gt_left" headers="stub_1_2 famsize">GT3</td>
+<td class="gt_row gt_left" headers="stub_1_2 Pstatus">T</td>
+<td class="gt_row gt_right" headers="stub_1_2 Medu">1</td>
+<td class="gt_row gt_right" headers="stub_1_2 Fedu">1</td>
+<td class="gt_row gt_left" headers="stub_1_2 Mjob">at_home</td>
+<td class="gt_row gt_left" headers="stub_1_2 Fjob">other</td>
+<td class="gt_row gt_left" headers="stub_1_2 reason">course</td>
+<td class="gt_row gt_left" headers="stub_1_2 guardian">father</td>
+<td class="gt_row gt_right" headers="stub_1_2 traveltime">1</td>
+<td class="gt_row gt_right" headers="stub_1_2 studytime">2</td>
+<td class="gt_row gt_right" headers="stub_1_2 failures">0</td>
+<td class="gt_row gt_left" headers="stub_1_2 schoolsup">no</td>
+<td class="gt_row gt_left" headers="stub_1_2 famsup">yes</td>
+<td class="gt_row gt_left" headers="stub_1_2 paid">no</td>
+<td class="gt_row gt_left" headers="stub_1_2 activities">no</td>
+<td class="gt_row gt_left" headers="stub_1_2 nursery">no</td>
+<td class="gt_row gt_left" headers="stub_1_2 higher">yes</td>
+<td class="gt_row gt_left" headers="stub_1_2 internet">yes</td>
+<td class="gt_row gt_left" headers="stub_1_2 romantic">no</td>
+<td class="gt_row gt_right" headers="stub_1_2 famrel">5</td>
+<td class="gt_row gt_right" headers="stub_1_2 freetime">3</td>
+<td class="gt_row gt_right" headers="stub_1_2 goout">3</td>
+<td class="gt_row gt_right" headers="stub_1_2 Dalc">1</td>
+<td class="gt_row gt_right" headers="stub_1_2 Walc">1</td>
+<td class="gt_row gt_right" headers="stub_1_2 health">3</td>
+<td class="gt_row gt_right" headers="stub_1_2 absences">4</td>
+<td class="gt_row gt_right" headers="stub_1_2 G1">5</td>
+<td class="gt_row gt_right" headers="stub_1_2 G2">5</td>
+<td class="gt_row gt_right" headers="stub_1_2 G3">6</td>
+</tr>
+<tr class="odd">
+<td id="stub_1_3" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">3</td>
+<td class="gt_row gt_left" headers="stub_1_3 school">GP</td>
+<td class="gt_row gt_left" headers="stub_1_3 sex">F</td>
+<td class="gt_row gt_right" headers="stub_1_3 age">15</td>
+<td class="gt_row gt_left" headers="stub_1_3 address">U</td>
+<td class="gt_row gt_left" headers="stub_1_3 famsize">LE3</td>
+<td class="gt_row gt_left" headers="stub_1_3 Pstatus">T</td>
+<td class="gt_row gt_right" headers="stub_1_3 Medu">1</td>
+<td class="gt_row gt_right" headers="stub_1_3 Fedu">1</td>
+<td class="gt_row gt_left" headers="stub_1_3 Mjob">at_home</td>
+<td class="gt_row gt_left" headers="stub_1_3 Fjob">other</td>
+<td class="gt_row gt_left" headers="stub_1_3 reason">other</td>
+<td class="gt_row gt_left" headers="stub_1_3 guardian">mother</td>
+<td class="gt_row gt_right" headers="stub_1_3 traveltime">1</td>
+<td class="gt_row gt_right" headers="stub_1_3 studytime">2</td>
+<td class="gt_row gt_right" headers="stub_1_3 failures">3</td>
+<td class="gt_row gt_left" headers="stub_1_3 schoolsup">yes</td>
+<td class="gt_row gt_left" headers="stub_1_3 famsup">no</td>
+<td class="gt_row gt_left" headers="stub_1_3 paid">yes</td>
+<td class="gt_row gt_left" headers="stub_1_3 activities">no</td>
+<td class="gt_row gt_left" headers="stub_1_3 nursery">yes</td>
+<td class="gt_row gt_left" headers="stub_1_3 higher">yes</td>
+<td class="gt_row gt_left" headers="stub_1_3 internet">yes</td>
+<td class="gt_row gt_left" headers="stub_1_3 romantic">no</td>
+<td class="gt_row gt_right" headers="stub_1_3 famrel">4</td>
+<td class="gt_row gt_right" headers="stub_1_3 freetime">3</td>
+<td class="gt_row gt_right" headers="stub_1_3 goout">2</td>
+<td class="gt_row gt_right" headers="stub_1_3 Dalc">2</td>
+<td class="gt_row gt_right" headers="stub_1_3 Walc">3</td>
+<td class="gt_row gt_right" headers="stub_1_3 health">3</td>
+<td class="gt_row gt_right" headers="stub_1_3 absences">10</td>
+<td class="gt_row gt_right" headers="stub_1_3 G1">7</td>
+<td class="gt_row gt_right" headers="stub_1_3 G2">8</td>
+<td class="gt_row gt_right" headers="stub_1_3 G3">10</td>
+</tr>
+<tr class="even">
+<td id="stub_1_4" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">4</td>
+<td class="gt_row gt_left" headers="stub_1_4 school">GP</td>
+<td class="gt_row gt_left" headers="stub_1_4 sex">F</td>
+<td class="gt_row gt_right" headers="stub_1_4 age">15</td>
+<td class="gt_row gt_left" headers="stub_1_4 address">U</td>
+<td class="gt_row gt_left" headers="stub_1_4 famsize">GT3</td>
+<td class="gt_row gt_left" headers="stub_1_4 Pstatus">T</td>
+<td class="gt_row gt_right" headers="stub_1_4 Medu">4</td>
+<td class="gt_row gt_right" headers="stub_1_4 Fedu">2</td>
+<td class="gt_row gt_left" headers="stub_1_4 Mjob">health</td>
+<td class="gt_row gt_left" headers="stub_1_4 Fjob">services</td>
+<td class="gt_row gt_left" headers="stub_1_4 reason">home</td>
+<td class="gt_row gt_left" headers="stub_1_4 guardian">mother</td>
+<td class="gt_row gt_right" headers="stub_1_4 traveltime">1</td>
+<td class="gt_row gt_right" headers="stub_1_4 studytime">3</td>
+<td class="gt_row gt_right" headers="stub_1_4 failures">0</td>
+<td class="gt_row gt_left" headers="stub_1_4 schoolsup">no</td>
+<td class="gt_row gt_left" headers="stub_1_4 famsup">yes</td>
+<td class="gt_row gt_left" headers="stub_1_4 paid">yes</td>
+<td class="gt_row gt_left" headers="stub_1_4 activities">yes</td>
+<td class="gt_row gt_left" headers="stub_1_4 nursery">yes</td>
+<td class="gt_row gt_left" headers="stub_1_4 higher">yes</td>
+<td class="gt_row gt_left" headers="stub_1_4 internet">yes</td>
+<td class="gt_row gt_left" headers="stub_1_4 romantic">yes</td>
+<td class="gt_row gt_right" headers="stub_1_4 famrel">3</td>
+<td class="gt_row gt_right" headers="stub_1_4 freetime">2</td>
+<td class="gt_row gt_right" headers="stub_1_4 goout">2</td>
+<td class="gt_row gt_right" headers="stub_1_4 Dalc">1</td>
+<td class="gt_row gt_right" headers="stub_1_4 Walc">1</td>
+<td class="gt_row gt_right" headers="stub_1_4 health">5</td>
+<td class="gt_row gt_right" headers="stub_1_4 absences">2</td>
+<td class="gt_row gt_right" headers="stub_1_4 G1">15</td>
+<td class="gt_row gt_right" headers="stub_1_4 G2">14</td>
+<td class="gt_row gt_right" headers="stub_1_4 G3">15</td>
+</tr>
+<tr class="odd">
+<td id="stub_1_5" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">5</td>
+<td class="gt_row gt_left" headers="stub_1_5 school">GP</td>
+<td class="gt_row gt_left" headers="stub_1_5 sex">M</td>
+<td class="gt_row gt_right" headers="stub_1_5 age">16</td>
+<td class="gt_row gt_left" headers="stub_1_5 address">U</td>
+<td class="gt_row gt_left" headers="stub_1_5 famsize">LE3</td>
+<td class="gt_row gt_left" headers="stub_1_5 Pstatus">T</td>
+<td class="gt_row gt_right" headers="stub_1_5 Medu">4</td>
+<td class="gt_row gt_right" headers="stub_1_5 Fedu">3</td>
+<td class="gt_row gt_left" headers="stub_1_5 Mjob">services</td>
+<td class="gt_row gt_left" headers="stub_1_5 Fjob">other</td>
+<td class="gt_row gt_left" headers="stub_1_5 reason">reputation</td>
+<td class="gt_row gt_left" headers="stub_1_5 guardian">mother</td>
+<td class="gt_row gt_right" headers="stub_1_5 traveltime">1</td>
+<td class="gt_row gt_right" headers="stub_1_5 studytime">2</td>
+<td class="gt_row gt_right" headers="stub_1_5 failures">0</td>
+<td class="gt_row gt_left" headers="stub_1_5 schoolsup">no</td>
+<td class="gt_row gt_left" headers="stub_1_5 famsup">yes</td>
+<td class="gt_row gt_left" headers="stub_1_5 paid">yes</td>
+<td class="gt_row gt_left" headers="stub_1_5 activities">yes</td>
+<td class="gt_row gt_left" headers="stub_1_5 nursery">yes</td>
+<td class="gt_row gt_left" headers="stub_1_5 higher">yes</td>
+<td class="gt_row gt_left" headers="stub_1_5 internet">yes</td>
+<td class="gt_row gt_left" headers="stub_1_5 romantic">no</td>
+<td class="gt_row gt_right" headers="stub_1_5 famrel">5</td>
+<td class="gt_row gt_right" headers="stub_1_5 freetime">4</td>
+<td class="gt_row gt_right" headers="stub_1_5 goout">2</td>
+<td class="gt_row gt_right" headers="stub_1_5 Dalc">1</td>
+<td class="gt_row gt_right" headers="stub_1_5 Walc">2</td>
+<td class="gt_row gt_right" headers="stub_1_5 health">5</td>
+<td class="gt_row gt_right" headers="stub_1_5 absences">10</td>
+<td class="gt_row gt_right" headers="stub_1_5 G1">15</td>
+<td class="gt_row gt_right" headers="stub_1_5 G2">15</td>
+<td class="gt_row gt_right" headers="stub_1_5 G3">15</td>
+</tr>
+<tr class="even">
+<td id="stub_1_6" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier; font-size: x-small; background-color: #E4E4E4">6..364</td>
+<td class="gt_row gt_left" headers="stub_1_6 school" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 sex" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 age" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 address" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 famsize" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 Pstatus" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 Medu" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 Fedu" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 Mjob" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 Fjob" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 reason" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 guardian" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 traveltime" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 studytime" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 failures" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 schoolsup" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 famsup" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 paid" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 activities" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 nursery" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 higher" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 internet" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_left" headers="stub_1_6 romantic" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 famrel" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 freetime" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 goout" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 Dalc" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 Walc" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 health" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 absences" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 G1" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 G2" style="background-color: #E4E4E4"></td>
+<td class="gt_row gt_right" headers="stub_1_6 G3" style="background-color: #E4E4E4"></td>
+</tr>
+<tr class="odd">
+<td id="stub_1_7" class="gt_row gt_right gt_stub" data-quarto-table-cell-role="th" scope="row" style="font-family: Courier">365</td>
+<td class="gt_row gt_left" headers="stub_1_7 school">MS</td>
+<td class="gt_row gt_left" headers="stub_1_7 sex">M</td>
+<td class="gt_row gt_right" headers="stub_1_7 age">19</td>
+<td class="gt_row gt_left" headers="stub_1_7 address">U</td>
+<td class="gt_row gt_left" headers="stub_1_7 famsize">LE3</td>
+<td class="gt_row gt_left" headers="stub_1_7 Pstatus">T</td>
+<td class="gt_row gt_right" headers="stub_1_7 Medu">1</td>
+<td class="gt_row gt_right" headers="stub_1_7 Fedu">1</td>
+<td class="gt_row gt_left" headers="stub_1_7 Mjob">other</td>
+<td class="gt_row gt_left" headers="stub_1_7 Fjob">at_home</td>
+<td class="gt_row gt_left" headers="stub_1_7 reason">course</td>
+<td class="gt_row gt_left" headers="stub_1_7 guardian">father</td>
+<td class="gt_row gt_right" headers="stub_1_7 traveltime">1</td>
+<td class="gt_row gt_right" headers="stub_1_7 studytime">1</td>
+<td class="gt_row gt_right" headers="stub_1_7 failures">0</td>
+<td class="gt_row gt_left" headers="stub_1_7 schoolsup">no</td>
+<td class="gt_row gt_left" headers="stub_1_7 famsup">no</td>
+<td class="gt_row gt_left" headers="stub_1_7 paid">no</td>
+<td class="gt_row gt_left" headers="stub_1_7 activities">no</td>
+<td class="gt_row gt_left" headers="stub_1_7 nursery">yes</td>
+<td class="gt_row gt_left" headers="stub_1_7 higher">yes</td>
+<td class="gt_row gt_left" headers="stub_1_7 internet">yes</td>
+<td class="gt_row gt_left" headers="stub_1_7 romantic">no</td>
+<td class="gt_row gt_right" headers="stub_1_7 famrel">3</td>
+<td class="gt_row gt_right" headers="stub_1_7 freetime">2</td>
+<td class="gt_row gt_right" headers="stub_1_7 goout">3</td>
+<td class="gt_row gt_right" headers="stub_1_7 Dalc">3</td>
+<td class="gt_row gt_right" headers="stub_1_7 Walc">3</td>
+<td class="gt_row gt_right" headers="stub_1_7 health">5</td>
+<td class="gt_row gt_right" headers="stub_1_7 absences">5</td>
+<td class="gt_row gt_right" headers="stub_1_7 G1">8</td>
+<td class="gt_row gt_right" headers="stub_1_7 G2">9</td>
+<td class="gt_row gt_right" headers="stub_1_7 G3">9</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>We check for duplicated points in the dataset, ensuring that there are pairs of data points with identical or nearly identical values. This is important for demonstrating strategies to mitigate overplotting. We also display a few rows of the duplicated points to visually confirm their presence.</p>
+</section>
+<section id="plot-1-generate-a-scatter-plot-using-geom_point" class="level4">
+<h4 class="anchored" data-anchor-id="plot-1-generate-a-scatter-plot-using-geom_point">2.2 Plot 1 – Generate a Scatter Plot Using geom_point()</h4>
+<p><strong>Creating a Basic Scatter Plot</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 1: Basic scatter plot</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>scatter_plot <span class="ot">&lt;-</span> student_data <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> G1, <span class="at">y =</span> G3)) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"darkred"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Scatter Plot of First vs Final Period Grades"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"First Period Grade (G1)"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Final Period Grade (G3)"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> (<span class="st">"Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance"</span>)) <span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(scatter_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="team_09_tidyverse_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We create a basic scatter plot to visualize the relationship between the first period grades (G1) and the final period grades (G3). The points are colored dark red and are slightly transparent to help with visibility.</p>
+</section>
+<section id="plot-2-create-an-improved-plot-to-mitigate-overplotting" class="level4">
+<h4 class="anchored" data-anchor-id="plot-2-create-an-improved-plot-to-mitigate-overplotting">2.3 Plot 2 – Create an Improved Plot to Mitigate Overplotting</h4>
+<p><strong>Creating a Scatter Plot with Jitter</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 2: Scatter plot with jitter to reduce overplotting</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>scatter_plot_jitter <span class="ot">&lt;-</span> student_data <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> G1, <span class="at">y =</span> G3)) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">height =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Scatter Plot with Jitter of First vs Final Period Grades"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"First Period Grade (G1)"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Final Period Grade (G3)"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> (<span class="st">"Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance"</span>)) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(scatter_plot_jitter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="team_09_tidyverse_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We create an improved scatter plot using <code>geom_jitter()</code> to add slight random noise to the data points. This helps to reduce overplotting by spreading out points that have identical or nearly identical values. The points are colored dark blue and are semi-transparent.</p>
+</section>
+<section id="plot-3-add-a-trend-curve-in-plot-2-and-discuss-insights" class="level4">
+<h4 class="anchored" data-anchor-id="plot-3-add-a-trend-curve-in-plot-2-and-discuss-insights">2.4 Plot 3 – Add a Trend Curve in Plot 2 and Discuss Insights</h4>
+<p><strong>Adding a Trend Curve to the Scatter Plot with Jitter</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 3: Scatter plot with jitter and trend curve</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>scatter_plot_trend <span class="ot">&lt;-</span> student_data <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> G1, <span class="at">y =</span> G3)) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">height =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Scatter Plot with Jitter and Trend Curve of First vs Final Period Grades"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"First Period Grade (G1)"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Final Period Grade (G3)"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> (<span class="st">"Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance"</span>)) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(scatter_plot_trend)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="team_09_tidyverse_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We enhance the scatter plot by adding a trend line using <code>geom_smooth()</code> with the method set to linear model (<code>lm</code>). The trend line helps to visualize the overall relationship between the first period grades (G1) and the final period grades (G3). The trend line is colored red and is slightly thicker for better visibility.</p>
+</section>
+</section>
+<section id="discussion-and-insights" class="level3">
+<h3 class="anchored" data-anchor-id="discussion-and-insights">Discussion and Insights</h3>
+<p>The trend curve in Plot 3 shows a positive correlation between the first period grades (G1) and the final period grades (G3). This indicates that students who perform well initially tend to maintain their performance throughout the course. The use of jitter in the plot helps to mitigate the effect of overplotting, making it easier to see the distribution of data points.</p>
+</section>
+</section>
+</section>
+<section id="task-3-visualizing-michelsons-speed-of-light-measurements" class="level1">
+<h1>Task 3: Visualizing Michelson’s Speed-of-Light Measurements</h1>
+<section id="convert-expt-column-to-factor" class="level2">
+<h2 class="anchored" data-anchor-id="convert-expt-column-to-factor">3.1 Convert Expt Column to Factor</h2>
+<p>…</p>
+</section>
+<section id="plot-1-create-a-scatter-plot-displaying-experiment-number-vs.-measured-speeds" class="level2">
+<h2 class="anchored" data-anchor-id="plot-1-create-a-scatter-plot-displaying-experiment-number-vs.-measured-speeds">3.2 Plot 1 – Create a Scatter Plot displaying Experiment Number vs.&nbsp;Measured Speeds</h2>
+<p>…</p>
+</section>
+<section id="plot-2-create-a-box-plot-measured-speeds-with-one-box-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="plot-2-create-a-box-plot-measured-speeds-with-one-box-experiment">3.3 Plot 2 – Create a Box Plot Measured Speeds with One Box Experiment</h2>
+<p>…</p>
+</section>
+<section id="plot-3-add-a-violin-plot-in-plot-2" class="level2">
+<h2 class="anchored" data-anchor-id="plot-3-add-a-violin-plot-in-plot-2">3.4 Plot 3 – Add a Violin Plot in Plot 2</h2>
+<p>…</p>
+</section>
+<section id="plot-4-create-a-faceted-plot-containing-5-histograms" class="level2">
+<h2 class="anchored" data-anchor-id="plot-4-create-a-faceted-plot-containing-5-histograms">3.5 Plot 4 – Create a Faceted Plot Containing 5 Histograms</h2>
+<p>…</p>
+</section>
+<section id="discuss-your-choice-among-the-4-visualization-plots" class="level2">
+<h2 class="anchored" data-anchor-id="discuss-your-choice-among-the-4-visualization-plots">3.6 Discuss Your Choice Among the 4 Visualization Plots</h2>
+<p>…</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
